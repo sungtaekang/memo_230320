@@ -28,7 +28,7 @@ public class UserRestController {
 	 * @param loginId
 	 * @return
 	 */
-	@RequestMapping("is_duplicated_id")
+	@RequestMapping("/is_duplicated_id")
 	public Map<String, Object> isDuplicatedId(
 			@RequestParam("loginId") String loginId) {
 		

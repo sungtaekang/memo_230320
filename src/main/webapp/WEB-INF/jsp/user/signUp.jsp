@@ -13,7 +13,7 @@
 							<input type="text" id="loginId" name="loginId" class="form-control col-9" placeholder="아이디를 입력하세요.">
 							<button type="button" id="loginIdCheckBtn" class="btn btn-success">중복확인</button><br>
 						</div>
-
+						
 						<%-- 아이디 체크 결과 --%>
 						<%-- d-none 클래스: display none (보이지 않게) --%>
 						<div id="idCheckLength" class="small text-danger d-none">ID를 4자 이상 입력해주세요.</div>
@@ -39,7 +39,7 @@
 				</tr>
 			</table>
 			<br>
-
+		
 			<button type="submit" id="signUpBtn" class="btn btn-primary float-right">회원가입</button>
 		</form>
 	</div>
@@ -47,6 +47,7 @@
 
 <script>
 	$(document).ready(function() {
+		// 중복확인 버튼 클릭
 		$("#loginIdCheckBtn").on('click', function() {
 			//alert("클릭");
 			
@@ -55,7 +56,7 @@
 			$('#idCheckDuplicated').addClass('d-none');
 			$('#idCheckOk').addClass('d-none');
 			
-			let loginId = $("#loginId").val().trim();
+			let loginId = $('#loginId').val().trim();
 			if (loginId.length < 4) {
 				$('#idCheckLength').removeClass('d-none');
 				return;
@@ -84,58 +85,58 @@
 		});
 		
 		// 회원가입
-		$('#signUpForm').on('submit', function(e) {
+		$("#signUpForm").on('submit', function(e) {
 			e.preventDefault(); // 서브밋 기능 중단
 			
 			// validation
 			let loginId = $('input[name=loginId]').val().trim();
-			let password = $('#password').val();
+			let password = $("#password").val();
 			let confirmPassword = $('#confirmPassword').val();
 			let name = $('#name').val().trim();
 			let email = $('#email').val().trim();
 			
 			if (!loginId) {
-				alert("아이디를 입력하세요.");
-				return false; // 서브밋일때는 return에 false까지 붙이기.
+				alert("아이디를 입력하세요");
+				return false;
 			}
 			if (!password || !confirmPassword) {
-				alert("비밀번호를 입력하세요.");
+				alert("비밀번호를 입력하세요");
 				return false;
 			}
 			if (password != confirmPassword) {
-				alert("비밀번호가 일치하지 않습니다.")
+				alert("비밀번호가 일치하지 않습니다");
 				return false;
 			}
 			if (!name) {
-				alert("이름을 입력하세요.");
+				alert("이름을 입력하세요");
 				return false;
 			}
 			if (!email) {
-				alert("이메일을 입력하세요.");
+				alert("이메일을 입력하세요");
 				return false;
 			}
-			// 아이디 중복확인 완료 됐는지 확인 -> idCheckO d-none이 있으면 alert을 띄워야함
+			// 아이디 중복확인 완료 됐는지 확인 -> idCheckOk d-none이 있으면 얼럿을 띄워야함
 			if ($('#idCheckOk').hasClass('d-none')) {
-				alert("아이디 중복확인을 다시 해주세요.");
+				alert("아이디 중복확인을 다시 해주세요");
 				return false;
 			}
 			
 			// 서버로 보내는 방법 두가지
-			// 1) form submit을 자바스크립트로 진행시킴
-			// $(this)[0].submit(); // 화면 이동을 반드시 해야한다.(컨트롤러가 redirect 또는 jsp)
+			// 1) form submit을 자바스크립트로 진행 시킴 
+			//$(this)[0].submit(); // 화면 이동을 반드시 해야한다.(컨트롤러가 redirect 또는 jsp)
 			
-			// 2) AJAX	-  컨트롤러가 JSON 리턴
+			// 2) AJAX  -  컨트롤러가 JSON 리턴
 			let url = $(this).attr('action');
 			console.log(url);
-			let params = $(this).serialize();	// 폼태그에 있는 name 속성-값들로 파라미터 구성
+			let params = $(this).serialize(); // 폼태그에 있는 name 속성-값들로 파라미터 구성
 			console.log(params);
 			
-			$.post(url, params)  // request
-			.done(function (data) {
+			$.post(url, params)   // request
+			.done(function(data) {
 				// response
 				if (data.code == 1) {
 					alert("가입을 환영합니다! 로그인을 해주세요.");
-					location.href = "user/sign_in_view";  // 로그인 화면으로 이동
+					location.href = "/user/sign_in_view"; // 로그인 화면으로 이동
 				} else {
 					// 로직 실패
 					alert(data.errorMessage);

@@ -16,12 +16,12 @@ import com.memo.post.domain.Post;
 @RequestMapping("/post")
 @Controller
 public class PostController {
-
+	
 	@Autowired
 	private PostBO postBO;
 	
 	@GetMapping("/post_list_view")
-	public String postListView(HttpSession session,Model model) {
+	public String postListView(HttpSession session, Model model) {
 		// 로그인 여부 조회
 		Integer userId = (Integer)session.getAttribute("userId");
 		if (userId == null) {
