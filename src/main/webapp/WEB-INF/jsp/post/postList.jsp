@@ -32,7 +32,7 @@
 				</tr>
 			</c:forEach>
 			</tbody>
-		</table>
+		</table>	
 		
 		<div class="d-flex justify-content-end">
 			<a href="/post/post_create_view" class="btn btn-warning">글쓰기</a>
