@@ -52,7 +52,7 @@ $(document).ready(function() {
 		}
 		
 		// alert(file);
-		
+			
 		// 파일이 업로드 된 경우에만 확장자 체크
 		if (file != "") {
 			// 파일 경로 C:\fakepath\다운로드.jpg
