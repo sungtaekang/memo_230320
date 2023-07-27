@@ -20,7 +20,7 @@
 		</div>
 		
 		<div class="d-flex justify-content-between">
-			<button type="button" id="deleteBtn" class="btn btn-secondary">삭제</button>
+			<button type="button" id="deleteBtn" class="btn btn-secondary" data-post-id="${post.id}">삭제</button>
 			
 			<div>
 				<a href="/post/post_list_view" class="btn btn-dark">목록</a>
@@ -90,6 +90,30 @@ $(document).ready(function() {
 			}
 			, error:function(request, status, error) {
 				alert("메모 수정 실패했습니다.");
+			}
+		});
+	});
+	
+	// 삭제
+	$('#deleteBtn').on('click', function() {
+		// alert(111);
+		let postId = $(this).data('post-id');
+		// alert(postId);
+		
+		$.ajax({
+			type:"delete"
+			, url:"/post/delete"
+			, data:{"postId":postId}
+			, success:function(data) {
+				if (data.code == 1) {
+					alert("삭제되었습니다");
+					location.href = "/post/post_list_view";
+				} else {
+					alert(data.errorMessage);
+				}
+			}
+			, error:function(request, status, error) {
+				alert("데이터를 삭제하는데 실패하였습니다");
 			}
 		});
 	});
